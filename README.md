@@ -38,6 +38,7 @@ Pará, Rondônia e Mato Grosso, conhecidos como “Arco do Desmatamento” (Silv
 et al., 2013; Carvalho e Domingues, 2016; Tollefson, 2018). Estudos preliminares na
 Floresta Nacional de Carajás, localizada na Amazônia Legal, indicam o declínio de
 95% das espécies de meliponíneos nos próximos anos (Giannini et al., 2020).
+
 Os modelos de distribuição ou modelos de nicho ecológico (SDMs), são um
 conjunto de ferramentas que combinam em modelos de correlativos dados de
 presencia com variáveis ambientais prever a distribuição geográfica potencial ou
