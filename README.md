@@ -56,3 +56,17 @@ meliponíneos e avaliado os efeitos causados pelo desmatamento (Barros et al.
 2022; Brown e Albrecht 2001; Brosi 2009; Campebell et al. 2022; Ferreira et al.
 2022). Além disso, todos estes estudos utilizaram pequenas extensões ou
 estudaram poucas espécies.
+
+**Objetivo geral**
+Avaliar a relação entre a diversidade das abelhas sem Ferrão (Apidae: Meliponini)
+fornecedoras ou não do serviço ecossistêmico de polinização de culturas com o uso
+do solo e as áreas protegidas na Amazônia Legal.
+
+Objetivos específicos
+● Estimar a distribuição espacial e descrever os padrões de diversidade de
+todos os meliponíneos e os meliponíneos polinizadores de culturas e frutas
+comestíveis na Amazônia Legal.
+● Estimar o grau de representatividade das espécies dentro das áreas
+protegidas.
+● Avaliar a influência da perda de cobertura natural na distribuição de todos os
+meliponíneos e aquelas polinizadoras de culturas e frutas comestíveis.
