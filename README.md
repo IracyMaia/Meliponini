@@ -58,11 +58,13 @@ meliponíneos e avaliado os efeitos causados pelo desmatamento (Barros et al.
 estudaram poucas espécies.
 
 **Objetivo geral**
+
 Avaliar a relação entre a diversidade das abelhas sem Ferrão (Apidae: Meliponini)
 fornecedoras ou não do serviço ecossistêmico de polinização de culturas com o uso
 do solo e as áreas protegidas na Amazônia Legal.
 
-Objetivos específicos
+**Objetivos específicos**
+
 ● Estimar a distribuição espacial e descrever os padrões de diversidade de
 todos os meliponíneos e os meliponíneos polinizadores de culturas e frutas
 comestíveis na Amazônia Legal.
