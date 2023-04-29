@@ -68,7 +68,9 @@ do solo e as áreas protegidas na Amazônia Legal.
 ● Estimar a distribuição espacial e descrever os padrões de diversidade de
 todos os meliponíneos e os meliponíneos polinizadores de culturas e frutas
 comestíveis na Amazônia Legal.
+
 ● Estimar o grau de representatividade das espécies dentro das áreas
 protegidas.
+
 ● Avaliar a influência da perda de cobertura natural na distribuição de todos os
 meliponíneos e aquelas polinizadoras de culturas e frutas comestíveis.
