@@ -1,9 +1,28 @@
 ## %######################################################%##
+#                                                          #
+####            Downloading, integrating, and           ####
+####           cleaning occurrence databases            ####
+#                                                          #
+## %######################################################%##
 # Written by: Santiago J.E. Velazco, M. Brooke Rose, & Janet Franklin
 
-# pacots para usar
-devtools::install_github("liibre/Rocc")
-library(Rocc)
+# Codes for installing package from GitHub:
+# install.packages("devtools")
+# devtools::install_github("idiv-biodiversity/LCVP")
+# install.packages("rnaturalearthhires", repos = "http://packages.ropensci.org", type = "source")
+# devtools::install_github("ropensci/rnaturalearthdata")
+# devtools::install_github("ropensci/rgnparser")
+# rgnparser::install_gnparser()
+# In case of trouble you can install gnparser see the help at  https://github.com/gnames/gnparser#install-with-homebrew
+# devtools::install_github("brunobrr/bdc")
+# devtools::install_github("liibre/Rocc")
+# devtools::install_github("sjevelazco/flexsdm")
+
+# install.packages("rworldmap")
+# install.packages("countrycode")
+# install.packages("rangeBuilder")
+
+###### Packages
 require(dplyr) # Manipulate data
 require(readr) # Read and write data
 require(ridigbio) # Download data from iDigBio
@@ -19,57 +38,58 @@ require(ggplot2) # Plot data
 require(sf) # For handling spatial data
 require(maps) # A spatial database of country boundaries
 
+
+
 ## %######################################################%##
 #                                                          #
 ####                    Species list                    ####
 #                                                          #
 ## %######################################################%##
 
-spp <- c("Peltophorum dubium", "Ceiba chodatii", "Asdf sfd")
+# In this tutorial let's work with two beautiful species from South America
+
+# Peltophorum dubium - Fabaceae
+## vernacular name: caña fístola, yvyrá-Pytá, yellow poinciana tree)
+## more information: https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:187026-2
+
+# Ceiba chodatii - Malvaceae
+## (vernacular name: palo borracho or yuchán)
+## more information: https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:1005658-1
+
+# We also will use non-existent species names ("Asdf sfd") to learn how to deal with situations
+# where a species name is not found
+
+
+spp <- c("Aparatrigona impuctata")
 
 getwd()
-dirs <- file.path(getwd(), "raw_data")
+dirs <- file.path(getwd(), "raw_data_AparatrigonaImpuctata")
 dirs
 dir.create(dirs) # Function for creating the directory where each dataset will be saved
 
 
-## %######################################################%##
-#                                                          #
-####                    SpeciesLink                      ####
-#                                                          #
-## %######################################################%##
-
-# Baixar diretamente do SpeciesLink (https://specieslink.net/)
-occ_list <- list()
-for (i in seq_along(spp)) {
-  occ_list[[i]] <- rspeciesLink(
-    species = spp[i],
-    basisOfRecord = NULL,
-    Scope = "plants",
-    save = FALSE,
-    Coordinates = "Yes",
-    CoordinatesQuality = "Good"
-  ) %>%
-    tibble()
-  names(occ_list)[i] <- spp[i]
-}
-#IGNORE THIS MESSAGE: Output is empty. Check your request.
-
-occ_list <- dplyr::bind_rows(occ_list, .id = "search_name")
-occ_list$datecollected <- paste(occ_list$year, occ_list$month, occ_list$day, sep = "-")
-occ_list$datecollected <- lubridate::ymd(occ_list$datecollected)
-
-readr::write_csv(occ_list, file.path(dirs, "SPECIESLINK.csv")) # save as csv
-
 
 ## %######################################################%##
 #                                                          #
-####                    GBIF                            ####
+####            Downloading occurrences data            ####
+####               from different sources               ####
 #                                                          #
 ## %######################################################%##
-# Global Biodiversity Information Facility (https://www.gbif.org/)
+
+## %######################################################%##
+#                                                          #
+####                       GBIF                         ####
+#                                                          #
+## %######################################################%##
+# https://www.gbif.org
+# https://docs.ropensci.org/rgbif/index.html
+# https://vimeo.com/127119010
+# rgbif::gbif_issues() %>% tibble() %>% View()
+# Read more about GBIF issues and gbif_issues() function for performing some extra data.cleaning
+
+
 occ_list <- list() # an empty list
-for (i in seq_along(spp)) {
+for (i in 1:length(spp)) {
   message(paste(i, Sys.time()))
   occ_list[[i]] <-
     rgbif::occ_data(
@@ -83,7 +103,7 @@ for (i in seq_along(spp)) {
 class(occ_list[[1]]) # it's a gbif_data not a data.frame or tibble
 
 # Let's extract the tibble (a kind of data.frame) object for each species
-for (i in seq_along(occ_list)) {
+for (i in 1:length(occ_list)) {
   occ_list[[i]] <- occ_list[[i]]$data
 }
 
@@ -97,14 +117,16 @@ occ_list <- occ_list %>% dplyr::select(-networkKeys)
 readr::write_csv(occ_list, file.path(dirs, "GBIF.csv")) # save as csv
 
 
+
 ## %######################################################%##
 #                                                          #
-####                    IDGBIO                          ####
+####                      iDigBio                       ####
 #                                                          #
 ## %######################################################%##
-# iDigBio (https://www.idigbio.org/)
+# https://www.idigbio.org/portal/search
+
 occ_list <- list()
-for (i in seq_along(spp)) {
+for (i in 1:length(spp)) {
   message(paste(i, Sys.time()))
   occ_list[[i]] <-
     ridigbio::idig_search_records(rq = list(scientificname = spp[i]), limit = 100000) %>%
@@ -123,18 +145,19 @@ occ_list$year <- lubridate::year(occ_list$datecollected)
 readr::write_csv(occ_list, file.path(dirs, "IDIGBIO.csv")) # save as csv
 
 
+
 ## %######################################################%##
 #                                                          #
-####                    iNATURALIST                     ####
+####                    iNaturalist                     ####
 #                                                          #
 ## %######################################################%##
-# iNaturalist (https://www.inaturalist.org/)
+# https://www.inaturalist.org
 
 occ_list <- list()
-for (i in seq_along(spp)) {
+for (i in 1:length(spp)) {
   message(paste(i, Sys.time()))
   try(res <- rinat::get_inat_obs(query = spp[i], quality = "research", geo = TRUE, maxresults = 10000))
-  try(res <- res %>% dplyr::filter(iconic_taxon_name == "Plantae", captive_cultivated == "false") %>% as_tibble())
+  try(res <- res %>% dplyr::filter(iconic_taxon_name == "Animalia", captive_cultivated == "false") %>% as_tibble())
   try(occ_list[[i]] <- res)
   try(rm(res))
   names(occ_list)[i] <- spp[i]
@@ -149,7 +172,37 @@ occ_list$year <- lubridate::year(occ_list$datetime)
 readr::write_csv(occ_list, file.path(dirs, "INATURALIST.csv")) # save as csv
 
 
-# Salvar em formato csv
+## %######################################################%##
+#                                                          #
+####                    SpeciesLink                     ####
+#                                                          #
+## %######################################################%##
+# https://specieslink.net
+# More interesting for Brazil and other countries of South America
+
+occ_list <- list()
+for (i in 1:length(spp)) {
+  occ_list[[i]] <- rspeciesLink(
+    species = spp[i],
+    basisOfRecord = NULL,
+    Scope = "Animals",
+    save = FALSE,
+    Coordinates = "Yes",
+    CoordinatesQuality = "Good"
+  ) %>%
+    tibble()
+  names(occ_list)[i] <- spp[i]
+}
+#IGNORE THIS MESSAGE: Output is empty. Check your request.
+
+occ_list <- dplyr::bind_rows(occ_list, .id = "search_name")
+occ_list$datecollected <- paste(occ_list$year, occ_list$month, occ_list$day, sep = "-")
+occ_list$datecollected <- lubridate::ymd(occ_list$datecollected)
+
+readr::write_csv(occ_list, file.path(dirs, "SPECIESLINK.csv")) # save as csv
+
+
+
 ## %######################################################%##
 ## %######################################################%##
 ## %######################################################%##
@@ -174,7 +227,7 @@ readr::write_csv(occ_list, file.path(dirs, "INATURALIST.csv")) # save as csv
 ####        bdc: Integrating different databases         ####
 #                                                          #
 ##%######################################################%##
-dirs <- file.path(getwd(), "raw_data")
+dirs <- file.path(getwd(), "raw_data_AparatrigonaImpuctata")
 dirs
 
 ### First copy and paste the "DatabaseInfo.txt" our "configuration table" in the raw_data folder ###
@@ -225,7 +278,7 @@ database <-
 ##%######################################################%##
 
 # Let's read this and explore this database
-dirs <- file.path(getwd(), "raw_data")
+dirs <- file.path(getwd(), "raw_data_AparatrigonaImpuctata")
 dir2 <- file.path(dirname(dirs), "Output/Intermediate/00_merged_database.csv")
 database <- readr::read_csv(dir2, show_col_types = FALSE)
 database
