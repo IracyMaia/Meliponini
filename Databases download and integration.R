@@ -112,7 +112,7 @@ for (i in 1:length(occ_list)) {
 occ_list <- dplyr::bind_rows(occ_list, .id = "search_name")
 names(occ_list)
 
-occ_list <- occ_list %>% dplyr::select(-networkKeys)
+# occ_list <- occ_list %>% dplyr::select(-networkKeys)
 
 readr::write_csv(occ_list, file.path(dirs, "GBIF.csv")) # save as csv
 
