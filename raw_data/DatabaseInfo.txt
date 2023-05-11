@@ -3,3 +3,4 @@ GBIF	C:\Users\iracy\OneDrive\Meliponini Mestrado\Desenvolvimento\02_Script para 
 IDIGBIO	C:\Users\iracy\OneDrive\Meliponini Mestrado\Desenvolvimento\02_Script para baixar dados\Meliponini\raw_data/occ_idigbio.csv	search_name	scientificname	geopoint.lat	geopoint.lon	uuid		datecollected	year	country	stateprovince						collector
 INATURALIST	C:\Users\iracy\OneDrive\Meliponini Mestrado\Desenvolvimento\02_Script para baixar dados\Meliponini\raw_data/occ_inaturalist.csv	search_name	scientific_name	latitude	longitude	id		observed_on	year						positional_accuracy		
 SPECIESLINK	C:\Users\iracy\OneDrive\Meliponini Mestrado\Desenvolvimento\02_Script para baixar dados\Meliponini\raw_data/occ_specieslink.csv	search_name	scientificName	decimalLatitude	decimalLongitude	catalogNumber	basisOfRecord	datecollected	year	country	stateProvince	county	locality	identifiedBy		coordinatePrecision	recordedBy
+SCANBUGS																	

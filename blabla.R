@@ -4,7 +4,6 @@
 ####           cleaning occurrence databases            ####
 #                                                          #
 ## %######################################################%##
-# Written by: Santiago J.E. Velazco, M. Brooke Rose, & Janet Franklin
 
 # Codes for installing package from GitHub:
 # install.packages("devtools")
@@ -23,6 +22,8 @@
 # install.packages("rangeBuilder")
 
 ###### Packages
+require(sdm)
+require(tidyr)
 require(dplyr) # Manipulate data
 require(readr) # Read and write data
 require(ridigbio) # Download data from iDigBio
@@ -46,21 +47,9 @@ require(maps) # A spatial database of country boundaries
 #                                                          #
 ## %######################################################%##
 
-# In this tutorial let's work with two beautiful species from South America
-
-# Peltophorum dubium - Fabaceae
-## vernacular name: caña fístola, yvyrá-Pytá, yellow poinciana tree)
-## more information: https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:187026-2
-
-# Ceiba chodatii - Malvaceae
-## (vernacular name: palo borracho or yuchán)
-## more information: https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:1005658-1
-
-# We also will use non-existent species names ("Asdf sfd") to learn how to deal with situations
-# where a species name is not found
 spp <- readxl::read_xlsx("EspeciesScanBug.xlsx", sheet = 1)
-spp %>% dplyr::pull(2)
-spp <- spp %>% dplyr::pull(2)
+spp %>% dplyr::pull(1)
+spp <- spp %>% dplyr::pull(1)
 
 getwd()
 dirs <- file.path(getwd(), "raw_data")
